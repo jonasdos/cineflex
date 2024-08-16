@@ -42,7 +42,8 @@ font-size: 24px;
 font-weight: 400;
 line-height: 39.13px;
 letter-spacing: 0.04em;
-margin-top: 20px;
+
+padding-top: 80px;
 
 `
 const Container = styled.div`

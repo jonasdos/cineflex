@@ -4,6 +4,7 @@ import Header from './Header'
 import Filmes from './Filmes'
 import Sessions from './Sessions'
 import Cadeiras from './Cadeiras'
+import Sucesso from './Sucesso'
 export default function App() {
  
  
@@ -16,6 +17,7 @@ export default function App() {
          <Route path='/' element={<Filmes/>}/> 
          <Route path='/sessions/:filmeid' element={<Sessions/>}/> 
          <Route path='/cadeiras/:sessionid' element={<Cadeiras/>}/> 
+         <Route path='/sucesso' element={<Sucesso/>}/>
         </Routes>
     </Body>
       </BrowserRouter>
@@ -25,7 +27,7 @@ export default function App() {
 
 const Body = styled.div`
 background-color: #212226;
-
+position: relative;
 `
 
 

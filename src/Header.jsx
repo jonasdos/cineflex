@@ -15,9 +15,15 @@ export default function Header() {
 const Container = styled.header`
 background-color: #EE897F;
 height: 67px;
+width: 100%;
 display: flex;
 justify-content: center;
 align-items: center;
+position: fixed;
+z-index: 10;
+
+top: 0px;
+
 `
 const Logo = styled(Link)`
 display: flex;
