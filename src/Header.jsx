@@ -1,13 +1,14 @@
 import logo from './assets/cineflexlogo.svg'
 import title from './assets/cineflextitle.svg'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 export default function Header() {
     return  <Container>
-        <div>
+        <Logo to={'/'}>
         <img src={logo}/>
         <img src={title}/>
-        </div>
+        </Logo>
       </Container>
 
 }
@@ -17,9 +18,9 @@ height: 67px;
 display: flex;
 justify-content: center;
 align-items: center;
-div {
-  display: flex;
-}
+`
+const Logo = styled(Link)`
+display: flex;
 img {
   margin-left: 10px;
   margin-right: 10px;

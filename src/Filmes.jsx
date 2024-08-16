@@ -2,12 +2,13 @@ import { useState } from 'react'
 import styled from 'styled-components'
 import { useEffect } from 'react'
 import axios from 'axios'
-//import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 
 export default function Filmes() {
-  const [filmes, setFilmes] = useState(null)
   
+  const [filmes, setFilmes] = useState(null)
+
   useEffect(() => {
     axios.get('https://mock-api.driven.com.br/api/v8/cineflex/movies')
     .then(res => {setFilmes(res.data)})
@@ -25,7 +26,9 @@ export default function Filmes() {
               
               {filmes.map((filme, index) => 
               <Filme key={filme.id} >
+                <Poster to={`/sessions/${filme.id}`} >
                 <img src={filme.posterURL} />
+                </Poster>
               </Filme>
               )}
             </Container>
@@ -50,12 +53,15 @@ align-items: center;
 min-height: 100vh;
 
 `
-const Filme = styled.a`
+const Filme = styled.div`
 img { 
   height: 210px;
   width: 145px;
   border-radius: 8px ;
   margin: 20px 20px;
-  cursor: pointer;
+  
 }
+`
+const Poster = styled(Link)`
+
 `
