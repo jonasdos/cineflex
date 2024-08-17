@@ -1,57 +1,55 @@
 import { useState } from "react"
 import { useEffect } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import { useParams } from "react-router-dom"
 import styled from "styled-components"
-
-
+import Titulo from './Titulo'
+import { formataCPF } from "./scripts/formatacpf"
 export default function Cadeiras() {
-  const [cadeiras, setCadeiras] = useState(null)
- const navigate = useNavigate()
-  const [comprador, setComprador] = useState({
-      nome: null, 
-      cpf: null, 
-      filme: null, 
-      data:null, 
-      hora: null,
-      ingressos:[],
-      ids:[]
-    })
-
-  
   const {sessionid} = useParams()
- 
+  const [titulo, setTitulo] =useState('Carregando...')
+  const [cadeiras, setCadeiras] = useState(null)
+  const navigate = useNavigate()
+  const [comprador, setComprador] = useState({
+  nome: null, 
+  cpf: null, 
+  filme: null, 
+  data:null, 
+  hora: null,
+  ingressos:[],
+  ids:[]})
   useEffect(() => {
     axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${sessionid}/seats`)
-    .then(res => {setCadeiras(res.data.seats)
-                  setComprador(prev => ({
-                    ...prev, 
-                    filme: res.data.movie.title, 
-                    data: res.data.day.date,
-                    hora: res.data.name}))
+    .then(res => {
+      setCadeiras(res.data.seats)
+      setTitulo('Selecione o(s) assento(s)')            
+      setComprador(prev => ({
+        ...prev, 
+        filme: res.data.movie.title, 
+        data: res.data.day.date,
+        hora: res.data.name}))
     })
     .catch(error => console.log(error))
-
-  },[])
+},[])
 function selecionaCadeira(cadeiraid) {
  setCadeiras(prev => 
   prev.map((cadeira) => 
     cadeiraid === cadeira.id && cadeira.isAvailable ? {
       ...cadeira, selecionada: !cadeira.selecionada
     } : cadeira
- 
 ))}
 function atualizaNome(valor) {
   setComprador(prev => ({
-...prev,
-nome: valor.target.value
-  })
+    ...prev,
+    nome: valor.target.value})
 )}
 function atualizaCPF(valor) {
+  let cpf = formataCPF(valor.target.value)
+
   setComprador(prev => ({
-    ...prev,
-    cpf: valor.target.value}))
+  ...prev,
+  cpf: cpf}))
 }
 function armazenaCompra(e) {
   e.preventDefault()
@@ -79,13 +77,14 @@ function armazenaCompra(e) {
 
   if(cadeiras === null) {
     return <>
-    <Titulo>Carregando...</Titulo>
-    <Container/> 
+    <Titulo>{titulo}</Titulo>
+    
     </>
   }
 
   return (<>
-    <Titulo>Selecione o(s) assento(s)</Titulo>
+  <Box>
+    <Titulo>{titulo}</Titulo>
     <Assentos>
       {cadeiras.map((cadeira, i) => 
       <Assento key={i} $disponibilidade={cadeira.isAvailable} $selecionada={cadeira.selecionada} onClick={() =>selecionaCadeira(cadeira.id)}>
@@ -96,43 +95,41 @@ function armazenaCompra(e) {
 
 <Formulario onSubmit={armazenaCompra} >
   <label htmlFor="Username">Nome do comprador(a)</label>
-  <input type="text" id="Username" name="UserName" placeholder="Digite seu nome..." onChange={atualizaNome}required/>
+  <input 
+  type="text" 
+  id="Username" 
+  name="UserName" 
+  placeholder="Digite seu nome..." 
+  onChange={atualizaNome}
+  required 
+  minLength={3}/>
   <label htmlFor="CPF">CPF do comprador(a)</label>
-  <input type="text" name="CPF" id="CPF" placeholder="Digite seu CPF..." onChange={atualizaCPF} required></input>
+  <input 
+  type="text" 
+  name="CPF" 
+  id="CPF" 
+  placeholder="Digite seu CPF..." 
+  onChange={atualizaCPF} 
+  required 
+  value={comprador.cpf || ''} 
+  minLength={14} 
+  maxLength={14}></input>
   <button type="submit" > Reservar assento(s)</button>
 
 </Formulario>
-    <Container/> 
-    </>)
+    
+</Box></>)
 }
-
-const Titulo = styled.h1`
-text-align: center;
-color: #FFFFFF;
-font-family: 'Sarala';
-font-size: 24px;
-font-weight: 400;
-line-height: 39.13px;
-letter-spacing: 0.04em;
-margin-top: 67px;
-padding-top: 20px;
-
-`
-const Container = styled.div`
-display: flex;
-flex-wrap: wrap;
-justify-content: space-around;
-align-items: center;
-min-height: calc(100vh - 386px);
-
-`
 
 const Assentos = styled.div`
 display: grid;
 justify-items: center;
-grid-template-columns: repeat(10, 1fr);
-margin: 25px;
+grid-template-columns: repeat( 10, 1fr);
+gap: 5px;
+
 position: relative;
+
+
 
 &::after {
   content: '';
@@ -173,6 +170,7 @@ p {
 `
 
 const Formulario = styled.form`
+
 display: flex;
 flex-direction: column;
 margin: 25px;
@@ -212,4 +210,12 @@ button {
   letter-spacing: 0.04em;
   font-weight: 700;
 }
+`
+
+const Box = styled.div`
+display: flex;
+flex-direction: column;
+max-width: 450px;
+margin: 0 auto;
+
 `

@@ -3,28 +3,25 @@ import styled from 'styled-components'
 import { useEffect } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
-
+import Titulo from './Titulo'
 
 export default function Filmes() {
   
-  const [filmes, setFilmes] = useState(null)
-
+  const [filmes, setFilmes] = useState([])
+  const [titulo, setTitulo] = useState('Carregando...')
   useEffect(() => {
     axios.get('https://mock-api.driven.com.br/api/v8/cineflex/movies')
-    .then(res => {setFilmes(res.data)})
+    .then(res => {
+      setFilmes(res.data)
+      setTitulo('Em cartaz')})
     .catch(error => console.log(error))
   }, [])
-  if (filmes === null) {
-    return <>
-    <Titulo>Carregando...</Titulo>
-    <Container/> 
-    </>
-  }
+ 
   return <>
-            <Titulo>Em Cartaz</Titulo>
+            <Titulo>{titulo}</Titulo>
             <Container>
               
-              {filmes.map((filme, index) => 
+              {filmes.map((filme) => 
               <Filme key={filme.id} >
                 <Poster to={`/sessions/${filme.id}`} >
                 <img src={filme.posterURL} />
@@ -34,24 +31,14 @@ export default function Filmes() {
             </Container>
   </>
 }
-const Titulo = styled.h1`
-text-align: center;
-color: #FFFFFF;
-font-family: 'Sarala';
-font-size: 24px;
-font-weight: 400;
-line-height: 39.13px;
-letter-spacing: 0.04em;
 
-padding-top: 80px;
-
-`
 const Container = styled.div`
-display: flex;
-flex-wrap: wrap;
-justify-content: space-around;
-align-items: center;
-min-height: 100vh;
+margin-top: 20px;
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+gap: 20px;
+justify-content: center;
+justify-items: center;
 
 `
 const Filme = styled.div`
@@ -59,7 +46,7 @@ img {
   height: 210px;
   width: 145px;
   border-radius: 8px ;
-  margin: 20px 20px;
+  
   
 }
 `

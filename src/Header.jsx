@@ -21,8 +21,8 @@ justify-content: center;
 align-items: center;
 position: fixed;
 z-index: 10;
-
-top: 0px;
+left: 0;
+top: 0;
 
 `
 const Logo = styled(Link)`

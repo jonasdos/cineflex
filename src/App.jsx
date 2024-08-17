@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import styled from 'styled-components'
 import Header from './Header'
 import Filmes from './Filmes'
 import Sessions from './Sessions'
@@ -11,7 +10,6 @@ export default function App() {
   return (
     <>
      <BrowserRouter>
-    <Body>
       <Header/>
         <Routes>
          <Route path='/' element={<Filmes/>}/> 
@@ -19,15 +17,11 @@ export default function App() {
          <Route path='/cadeiras/:sessionid' element={<Cadeiras/>}/> 
          <Route path='/sucesso' element={<Sucesso/>}/>
         </Routes>
-    </Body>
       </BrowserRouter>
     </>
   )
 }
 
-const Body = styled.div`
-background-color: #212226;
-position: relative;
-`
+
 
 

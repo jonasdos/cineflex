@@ -1,36 +1,37 @@
 import React, { useState } from "react"
-import Header from "./Header"
 import styled from "styled-components"
 import { useLocation } from "react-router-dom"
 import { useEffect } from "react"
 import axios from "axios"
 import { Link } from "react-router-dom"
-
+import Titulo from './Titulo'
 
 export default function Sucesso() {
   const location = useLocation()
   const [{filme, cpf, data, hora, ids, ingressos, nome}] = location.state
-  
-
-  const [carregapage, useCarregaPage] = useState(false)
-
-  
-    //axios.post('https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many',{
-     // ids: dadosCompra.ids,
-      //name: dadosCompra.nome,
-     // cpf: dadosCompra.cpf
-   // })
-    //.then(sucess => console.log(sucess))
-//.catch(err => console.log(err))
-
-  if (carregapage) {
-    return <><Header/>
-    <Titulo>Carregando...</Titulo>
+  const [carregapage, setCarregaPage] = useState(false)
+  const [titulo, setTitulo] = useState('Reservando seus ingressos...')
+useEffect(() =>{
+  axios.post('https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many',{
+    ids: ids,
+    name: nome,
+    cpf: cpf
+  })
+  .then(sucess => {
+    setCarregaPage(true)
+    setTitulo('Pedido finalizado!')
+    })
+    .catch(err => console.log(err))
+    
+  },[])
+    if (!carregapage) {
+      return <>
+    <Titulo>{titulo}</Titulo>
     </>}
   
   return (<>
-  <Header/>
-  <Titulo $cor={'#9DB899'}>Pedido finalizado!</Titulo>
+  
+  <Titulo $cor={'#9DB899'}>{titulo}</Titulo>
   <Extrato>
     
       <h1>Filme e sessão</h1>
@@ -53,18 +54,6 @@ export default function Sucesso() {
   
     </>)
 }
-
-const Titulo = styled.h1`
-text-align: center;
-color: ${props => props.$cor ? props.$cor : '#FFFFFF'};
-font-family: 'Sarala';
-font-size: 24px;
-font-weight: 400;
-line-height: 39.13px;
-letter-spacing: 0.04em;
-margin-top: 67px;
-padding-top: 20px;
-`
 
 const Extrato = styled.div`
 background-color: #2B2D36;
