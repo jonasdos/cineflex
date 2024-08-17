@@ -1,8 +1,8 @@
-# React + Vite
+# Cineflex 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Sistema de reserva de ingressos.
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
+
+![image](https://github.com/user-attachments/assets/57dd17b0-478f-4ec2-b912-22ab9c7a0fb0)
