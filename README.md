@@ -1,6 +1,6 @@
 # Cineflex 
 
-## Cineflex é um projeto desenvolvido utilizando Vite e React. O objetivo do projeto é criar um sistema de reserva de ingressos de cinema onde os usuários podem selecionar filmes, sessões, escolher assentos e confirmar a compra.
+### Cineflex é um projeto desenvolvido utilizando Vite e React. O objetivo do projeto é criar um sistema de reserva de ingressos de cinema onde os usuários podem selecionar filmes, sessões, escolher assentos e confirmar a compra.
 
 
 
@@ -20,3 +20,6 @@
 - React: Biblioteca JavaScript para construção de interfaces.
 - React Router: Gerenciamento de rotas no projeto.
 - Styled-components: Biblioteca para estilização de componentes.
+
+## Visite a Aplicação
+Você pode acessar a versão final da aplicação https://cineflex-iota-peach.vercel.app/.
